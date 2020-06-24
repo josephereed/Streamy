@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../actions';
 
-const GoogleAuth = () => {
-  const [state, setState] = useState({ isSignedIn: null });
+const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
+  const onAuthChange = isSignedIn => {
+    if (isSignedIn) {
+      signIn(window.gapi.auth2.getAuthInstance().currentUser.get().getId());
+      
+    } else {
+      signOut();
+    }
+  };
+
   useEffect(() => {
     window.gapi.load('client:auth2', () => {
-      window.gapi.client
-        .init({
-          clientId:
-            '106215676493-h04bp2ougbv9qj3im4qdqae2o6b2bjke.apps.googleusercontent.com',
-          scope: 'email',
-        })
-        .then(() => {
-          const auth = window.gapi.auth2.getAuthInstance();
-          setState({ isSignedIn: auth.isSignedIn.get() });
-          auth.isSignedIn.listen((isSignedIn) => {
-            setState({ isSignedIn: isSignedIn})
-          });
-        });
+      window.gapi.client.init({
+        clientId:
+          '106215676493-h04bp2ougbv9qj3im4qdqae2o6b2bjke.apps.googleusercontent.com',
+        scope: 'email',
+      }).then(() => {
+        let auth = window.gapi.auth2.getAuthInstance();
+        onAuthChange(auth.isSignedIn.get());
+        auth.isSignedIn.listen(onAuthChange);
+      })
     });
+    //eslint-disable-next-line
   }, []);
 
   const RenderAuthButton = () => {
-    if (state.isSignedIn === null) {
+    if (isSignedIn === null) {
       return null;
-    } else if (state.isSignedIn) {
+    } else if (isSignedIn) {
       return (
         <button
           className="ui red google button"
@@ -57,4 +64,8 @@ const GoogleAuth = () => {
   );
 };
 
-export default GoogleAuth;
+const mapStateToProps = (state) => ({
+  isSignedIn: state.auth.isSignedIn,
+});
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
