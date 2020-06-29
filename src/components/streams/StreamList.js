@@ -17,7 +17,7 @@ const StreamList = ({ getStreams, streams, currentUserId, isSignedIn }) => {
   const renderAdmin = (stream) => {
     if (stream.userId === currentUserId) {
       return (
-        <div className="right floated content middle aligned">
+        <div className="right floated content">
         <Link to={`/streams/edit/${stream.id}`}>
           <button className="ui tiny button">EDIT</button>
         </Link>
@@ -36,7 +36,7 @@ const StreamList = ({ getStreams, streams, currentUserId, isSignedIn }) => {
           {renderAdmin(stream)}
           <i className="large middle aligned icon camera"></i>
           <div className="content">
-            <strong>{stream.title}</strong>
+            <Link to={`/stream/${stream.id}`}><strong>{stream.title}</strong></Link>
             <div className="description">{stream.description}</div>
           </div>
         </div>

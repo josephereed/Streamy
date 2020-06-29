@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from '../Modal';
 import { connect } from 'react-redux';
 import history from '../../history';
 import { deleteStream } from '../../actions/';
+import { getStream } from '../../actions/';
 
-const StreamDelete = ({ deleteStream, match }) => {
+const StreamDelete = ({ deleteStream, match, stream, getStream }) => {
+  useEffect(() => {
+    getStream();
+    //eslint-disable-next-line
+  }, []);
+
   const actions = (
     <>
       <button
@@ -22,13 +28,23 @@ const StreamDelete = ({ deleteStream, match }) => {
     </>
   );
 
-  return (
-      <Modal
-        title="Delete Stream"
-        content="Are you sure you want to delete the stream"
-        actions={actions}
-      />
+  const content = (
+    <>
+      Are you sure you want to delete the stream{' '}
+      <strong>
+        <em>"{stream && stream.title}"</em>
+      </strong>{' '}
+      ?
+    </>
   );
+
+  return <Modal title="Delete Stream" content={content} actions={actions} />;
 };
 
-export default connect(null, { deleteStream })(StreamDelete);
+const mapStateToProps = (state, ownProps) => {
+  return { stream: state.streams[ownProps.match.params.id] };
+};
+
+export default connect(mapStateToProps, { getStream, deleteStream })(
+  StreamDelete
+);

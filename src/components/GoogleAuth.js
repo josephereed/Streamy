@@ -58,9 +58,7 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
   };
 
   return (
-    <div>
       <RenderAuthButton />
-    </div>
   );
 };
 
