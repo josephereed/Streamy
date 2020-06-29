@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getStream, editStream } from '../../actions/index';
 import StreamForm from './StreamForm';
+import Modal from '../Modal';
 
 const StreamEdit = ({ match, stream, getStream, editStream }) => {
-
   const onSubmit = (formValues) => {
     editStream(match.params.id, formValues);
-  }
+  };
 
   useEffect(() => {
     getStream(match.params.id);
@@ -20,11 +20,12 @@ const StreamEdit = ({ match, stream, getStream, editStream }) => {
     const { title, description } = stream;
     return (
       <div>
-        <h3>Edit Stream</h3>
-        <StreamForm 
-          onSubmit={onSubmit} 
-          initialValues={{ title, description }}
-        />
+        <Modal title="Edit Stream">
+          <StreamForm
+            onSubmit={onSubmit}
+            initialValues={{ title, description }}
+          />
+        </Modal>
       </div>
     );
   }

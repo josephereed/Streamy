@@ -33,7 +33,7 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
     } else if (isSignedIn) {
       return (
         <button
-          className="ui blue google button"
+          className="ui blue tiny google button"
           onClick={() => {
             window.gapi.auth2.getAuthInstance().signOut();
           }}
@@ -45,7 +45,7 @@ const GoogleAuth = ({ signIn, signOut, isSignedIn }) => {
     } else {
       return (
         <button
-          className="ui blue google button"
+          className="ui blue tiny google button"
           onClick={() => {
             window.gapi.auth2.getAuthInstance().signIn();
           }}

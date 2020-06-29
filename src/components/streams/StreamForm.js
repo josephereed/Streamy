@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-
+import history from '../../history';
 const renderInput = ({ input, label, meta }) => {
   const className = `field ${meta.touched && meta.error && 'error'}`;
   return (
@@ -33,7 +33,10 @@ const StreamForm = (props) => {
           component={renderInput}
           label="Enter Description"
         />
+        <div style={{ textAlign: 'right'}}>
         <button className="ui primary button">Submit</button>
+        <button style={{ marginLeft: '12px'}}className="ui button item" onClick={() => history.goBack()}>Close</button>
+        </div>
       </form>
     </div>
   );

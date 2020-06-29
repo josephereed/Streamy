@@ -17,12 +17,12 @@ const StreamList = ({ getStreams, streams, currentUserId, isSignedIn }) => {
   const renderAdmin = (stream) => {
     if (stream.userId === currentUserId) {
       return (
-        <div className="right floated content">
+        <div className="right floated content middle aligned">
         <Link to={`/streams/edit/${stream.id}`}>
-          <button className="ui button">EDIT</button>
+          <button className="ui tiny button">EDIT</button>
         </Link>
         <Link to={`/streams/delete/${stream.id}`}>
-          <button className="ui button negative">DELETE</button>
+          <button style={{ marginLeft: '12px'}}className="ui tiny button negative">DELETE</button>
         </Link>
         </div>
       );
@@ -52,7 +52,7 @@ const StreamList = ({ getStreams, streams, currentUserId, isSignedIn }) => {
   return (
     <div>
       <h2>Streams</h2>
-      <div className="ui celled list">{renderList()}</div>
+      <div className="ui relaxed celled list">{renderList()}</div>
       {/* eslint-disable-next-line */}
       <div className="ui menu" style={{WebkitBoxShadow: 'none', border: 'none'}}>
         <div className="floated right item" style={{ textAlign: 'right' }}>
